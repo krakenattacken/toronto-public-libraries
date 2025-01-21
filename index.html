@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Ten Years at the Toronto Public Library</title>
+    
+    <script src='https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js'></script>
+    <link href='https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css' rel='stylesheet' />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link href="main.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <main>
+      <header>
+        <h1>Ten Years at the tpl<span>:</span></h1>
+        <p class="info">
+          The <a href="https://www.torontopubliclibrary.ca/" target="_blank" rel="noopener noreferrer">Toronto Public Library</a> is the largest public library system in North America. See some of the () from 2013-2023. Data from 
+          <a href="https://open.toronto.ca/catalogue/?search=library&sort=score%20desc" target="_blank" rel="noopener noreferrer">Toronto Open Data Portal.</a>
+          See more on <a href="https://github.com/krakenattacken/toronto-public-libraries" target="_blank" rel="noopener noreferrer">GitHub</a>. Map by Laurence Jang.
+        </p>
+      </header>
+    </main>
+
+    <div class="popup">
+    </div>
+    <script src="map.js"></script>
+  </body>
+</html>
