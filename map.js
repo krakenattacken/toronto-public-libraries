@@ -3,7 +3,7 @@ let map = new maplibregl.Map({
   container: 'map', 
   style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json", 
   center: [-79.4532, 43.7132], 
-  zoom: 10.7,
+  zoom: 10.5,
   maxBounds: [[-80.95, 42.79212], [-77.900, 44.246449]]
 });
 

@@ -1,3 +1,10 @@
+:root {
+  --bright-blue: #006edb;
+  --bg-white: #f5f5f5;
+  --pale-grey: #d8d5d5;
+  --dark-grey: #8c8c8c;
+}
+
 html, body {
   height: 100%;
   margin: 0;
@@ -10,34 +17,23 @@ html, body {
   height: 100%;
 }
 
-header {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background-color: #f5f5f5;
-  padding: 5px 10px;
-  border-radius: 5px;
-  width: 350px;
-  box-shadow: 0 0 5px #8c8c8c;
-}
-
 h1 {
   margin: 0;
+  border-bottom: 1px solid var(--pale-grey);
 }
-h1.span{
-  color: #006edb;
+h1:hover > span{
+  color: var(--bright-blue);
 }
 
 p {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
 }
 
 a {
   text-decoration: none;
   position: relative;
-  color: #005FC0;
+  color: var(--bright-blue);
 }
-
 a::before {
   content: '';
   position: absolute;
@@ -45,13 +41,35 @@ a::before {
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #005FC0;
+  background-color: var(--bright-blue);
   transform-origin: right;
   transform: scaleX(0);
   transition: transform .3s ease-in-out;
 }
-
 a:hover::before {
   transform-origin: left;
   transform: scaleX(1);
+}
+
+/* generic style for side info */
+.sidebar-container {
+  background-color: var(--bg-white);
+  padding: 5px 10px;
+  border-radius: 5px;
+  width: 350px;
+  box-shadow: 0 0 5px var(--dark-grey);
+}
+.header {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+.legend {
+  position: absolute;
+  width: 350px;
+  top: 164px;
+  left: 10px;
+}
+.menu {
+
 }
