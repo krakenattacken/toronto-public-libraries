@@ -58,20 +58,20 @@ main {
   position: absolute;
   top: 10px;
   left: 10px;
-  width: 350px;
+  width: 370px;
 }
 
 .container {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  height: calc(100vh - 20px);
 }
 /* generic style for side info */
 .sidebar-container {
   background-color: var(--bg-white);
   padding: 5px 10px;
   border-radius: 5px;
-  width: 350px;
   box-shadow: 0 0 5px var(--dark-grey);
 }
 
@@ -81,6 +81,10 @@ main {
   align-items: center;
   width: 100%;
   border-bottom: solid 1px var(--pale-grey);
+}
+#popup {
+  overflow: auto;
+  max-height: 100%;
 }
 #popup h2 {
   margin: 0;
@@ -115,3 +119,23 @@ main {
 #close-button:hover {
   background: var(--bright-blue-lite);
 }
+
+select {
+  font: inherit;
+  font-size: 14px;
+  border-radius: 5px;
+  max-width: 50%;
+}
+
+/* #popup::-webkit-scrollbar {
+  width: 1em;
+}
+#popup::-webkit-scrollbar-thumb {
+  background: var(--bright-blue-lite);
+}
+#popup::-webkit-scrollbar-track {
+  background: var(--pale-grey);
+}
+#popup::-webkit-scrollbar-thumb:hover {
+  background: var(--bright-blue);
+} */

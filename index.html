@@ -8,12 +8,13 @@
 
     <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src='https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <link href='https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css' rel='stylesheet' />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-    <link href="main.css" rel="stylesheet"/>
+    <link href="style.css" rel="stylesheet"/>
   </head>
   <body>
     <div id="map"></div>
@@ -23,7 +24,7 @@
         <div class="sidebar-container header">
           <h1>ten years at the tpl<span>:</span></h1>
           <p class="info">
-            The <a href="https://www.torontopubliclibrary.ca/" target="_blank" rel="noopener noreferrer">Toronto Public Library</a> is the largest public library system in North America. See some of the data from 2013-2023. Data from 
+            The <a href="https://www.torontopubliclibrary.ca/" target="_blank" rel="noopener noreferrer">Toronto Public Library</a> is the largest public library system in North America. Explore some data from 2013-2023. Data from 
             <a href="https://open.toronto.ca/catalogue/?search=library&sort=score%20desc" target="_blank" rel="noopener noreferrer">Toronto Open Data.</a>
             See more on <a href="https://github.com/krakenattacken/toronto-public-libraries" target="_blank" rel="noopener noreferrer">GitHub</a>. Map by Laurence Jang.
           </p>
@@ -47,9 +48,16 @@
           </div>
           <p id="branch-address"></p>
           <p>
-            <a id="branch-website" target="_blank" rel="noopener noreferrer"></a> | <span id="branch-telephone"></span>
+            <a id="branch-website" target="_blank" rel="noopener noreferrer">Branch Website</a> | <span id="branch-telephone"></span>
           </p>
           <img id="branch-photo"/>
+          <p><b>Current address opening year: </b><span id="opening-year"></span></p>
+          <p><b>Neighbourhood: </b><span id="branch-neighbourhood"></span></p>
+          <p><b>Computer workstations: </b><span id="branch-workstations"></span></p>
+          <p><b>Branch programs/features: </b><span id="branch-features"></span></p>
+          <div>
+            <canvas id="chart"></canvas>
+          </div>
         </div>
       </div>  
       
