@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Ten Years at the Toronto Public Library</title>
-    
+
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src='https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js'></script>
+
     <link href='https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css' rel='stylesheet' />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,23 +19,41 @@
     <div id="map"></div>
 
     <main>
+      <div class="container">
         <div class="sidebar-container header">
           <h1>ten years at the tpl<span>:</span></h1>
           <p class="info">
-            The <a href="https://www.torontopubliclibrary.ca/" target="_blank" rel="noopener noreferrer">Toronto Public Library</a> is the largest public library system in North America. See some of the () from 2013-2023. Data from 
-            <a href="https://open.toronto.ca/catalogue/?search=library&sort=score%20desc" target="_blank" rel="noopener noreferrer">Toronto Open Data Portal.</a>
+            The <a href="https://www.torontopubliclibrary.ca/" target="_blank" rel="noopener noreferrer">Toronto Public Library</a> is the largest public library system in North America. See some of the data from 2013-2023. Data from 
+            <a href="https://open.toronto.ca/catalogue/?search=library&sort=score%20desc" target="_blank" rel="noopener noreferrer">Toronto Open Data.</a>
             See more on <a href="https://github.com/krakenattacken/toronto-public-libraries" target="_blank" rel="noopener noreferrer">GitHub</a>. Map by Laurence Jang.
           </p>
         </div>
-        <div class="menu">
-          <!--data viz options menu. dropdown? or radio?-->
+        <div class="sidebar-container menu">
+          <input id="slider" type="range" min="2013" max="2023" step="1" value="2023"/>
+          <label id="year" for="slider"></label>
+          <select id="property-dropdown">
+            <option value="visits">Visits</option>
+            <option value="circulation">Circulated Materials</option>
+            <option value="cards">Card Registrations</option>
+          </select>
         </div>
         <div class="sidebar-container legend">
           <!--Some dynamic legend?-->
         </div>
+        <div id="popup" class="sidebar-container collapse">
+          <div class="popup-title">
+            <h2 id="branch-name"></h2>
+            <button id="close-button" aria-label="close popup">&times;</button>
+          </div>
+          <p id="branch-address"></p>
+          <p>
+            <a id="branch-website" target="_blank" rel="noopener noreferrer"></a> | <span id="branch-telephone"></span>
+          </p>
+          <img id="branch-photo"/>
+        </div>
+      </div>  
+      
     </main>
-
-    <div class="popup"></div>
     <script src="map.js"></script>
   </body>
 </html>
