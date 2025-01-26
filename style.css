@@ -1,9 +1,9 @@
 :root {
-  --bright-blue: #006edb;
-  --bright-blue-lite: #1a8cff57;
-  --bg-white: #f5f5f5;
-  --pale-grey: #d8d5d5;
-  --dark-grey: #8c8c8c;
+  --bright-blue: hsl(210 100% 42.9%);
+  --bright-blue-lite: hsla(210 100% 55.1% / 0.34);
+  --bg-white: hsl(0 0% 96.1%);
+  --pale-grey: hsl(0 3.7% 84.1%);
+  --dark-grey: hsl(0 0% 54.9%);
 }
 
 html, body {
