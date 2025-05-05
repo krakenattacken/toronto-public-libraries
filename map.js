@@ -3,9 +3,7 @@ let currentProperty = 'visits';
 let librariesData = {};
 let chartInstance = null;
 let currentLibrary = null;
-let yearLabel = document.getElementById('year');
 let breaks = [];
-yearLabel.textContent = currentYear;
 
 const color1 = "hsl(205 100% 89%)";
 const color2 = "hsl(208 85.8% 75.1%)";
@@ -25,8 +23,7 @@ let map = new maplibregl.Map({
     maxBounds: [[-80.95, 42.79212], [-77.900, 44.246449]]
 });
 
-map.addControl(new maplibregl.NavigationControl(), 'top-right');
-map.addControl(new maplibregl.ScaleControl({ unit: 'metric' }), 'bottom-right');
+map.addControl(new maplibregl.NavigationControl(), 'bottom-right');
 
 const popup = document.getElementById('popup');
 const closeButton = document.getElementById('close-button');
@@ -80,22 +77,50 @@ d3.json('data/libraries.geojson', (err, data) => {
             data: librariesData
         });
 
+        // reference layers
+        map.addSource('neighbourhoods', {
+            type: 'geojson',
+            data: 'data/toronto_neighbourhoods.geojson'
+        })
+        map.addSource('closest', {
+            type: 'geojson',
+            data: 'data/closest.geojson'
+        })
+        map.addLayer({
+          id: 'neighbourhoods',
+          type: 'line',
+          source: 'neighbourhoods',
+          layout: {visibility: 'none'},
+          paint: {
+            'line-color': 'hsla(287 100% 16% / 0.6)',
+            'line-width': 1.5,
+            "line-dasharray": [3, .7]
+          }
+        });
+        map.addLayer({
+          id: 'closest',
+          type: 'line',
+          source: 'closest',
+          layout: {visibility: 'none'},
+          paint: {
+            'line-color': 'hsla(137 100% 16% / 0.6)',
+            'line-width': 1.5,
+            "line-dasharray": [3, .7]
+          }
+        });
+
+        const tooltip = new maplibregl.Popup({
+          closeButton: false,
+          closeOnClick: false
+        });
+
         breaks = getJenks();
         map.addLayer({
             id: 'libraries',
             type: 'circle',
             source: 'libraries',
             paint: {
-                'circle-color': [
-                  "step",
-                  ["get", `${currentProperty}_${currentYear}`],
-                  color1, breaks[0],
-                  color2, breaks[1],
-                  color3, breaks[2],
-                  color4, breaks[3],
-                  color5, breaks[4],
-                  color6
-                ],
+                'circle-color': color1,
                 'circle-stroke-color': strokeColor,
                 'circle-stroke-width': 1,
                 'circle-radius': [
@@ -108,21 +133,34 @@ d3.json('data/libraries.geojson', (err, data) => {
                   22, breaks[4],
                   26
                 ]
-            },
+            }
         });
 
-        map.on('mouseenter', 'libraries', () => {
+        let currentFeatureCoordinates = undefined;
+        map.on('mousemove', 'libraries', (e) => {
+          const featureCoordinates = e.features[0].geometry.coordinates.toString();
+          if (currentFeatureCoordinates !== featureCoordinates) {
+            currentFeatureCoordinates = featureCoordinates;
+
             map.getCanvas().style.cursor = 'pointer';
+
+            const coordinates = e.features[0].geometry.coordinates.slice();
+            const description = e.features[0].properties.BranchName;
+            
+            tooltip.setLngLat(coordinates).setText(description).addTo(map);
+          }
         });
 
         map.on('mouseleave', 'libraries', () => {
+            currentFeatureCoordinates = undefined;
             map.getCanvas().style.cursor = '';
+            tooltip.remove();
         });
 
         map.on('click', 'libraries', (e) => {
             map.flyTo({
                 center: e.features[0].geometry.coordinates,
-                zoom: 17
+                zoom: 18
             });
 
             currentLibrary = e.features[0];
@@ -142,7 +180,6 @@ d3.json('data/libraries.geojson', (err, data) => {
             popup.classList.add('show');
             generateChart();
         });
-
         updateLayer();
     });
 });
@@ -173,18 +210,39 @@ function updateLayer() {
       8, breaks[1],
       12, breaks[2],
       16, breaks[3],
-      22, breaks[4],
-      26
+      20, breaks[4],
+      24
     ]);
+    updateLegend();
 }
 
-// slider update
-document.getElementById('slider').addEventListener('input', (e) => {
+// populate year select
+const yearSelect = document.getElementById('year-dropdown');
+for (let year = 2013; year <= 2023; year++) {
+  const option = document.createElement('option');
+  option.value = year;
+  option.text = year;
+  yearSelect.appendChild(option);
+}
+yearSelect.value = currentYear;
+
+//select update
+document.getElementById('year-dropdown').addEventListener('change', (e) => {
   const selectedYear = parseInt(e.target.value, 10);
   currentYear = selectedYear;
-  yearLabel.textContent = currentYear;
+  yearSelect.value = currentYear;
   updateLayer(`${currentProperty}_${currentYear}`);
   if (currentLibrary !== null) generateChart(currentLibrary);
+});
+
+// reference layers
+document.getElementById('toggle-neighbourhoods').addEventListener('change', function (e) {
+  const visibility = e.target.checked ? 'visible' : 'none';
+  map.setLayoutProperty('neighbourhoods', 'visibility', visibility);
+});
+document.getElementById('toggle-closest').addEventListener('change', function (e) {
+  const visibility = e.target.checked ? 'visible' : 'none';
+  map.setLayoutProperty('closest', 'visibility', visibility);
 });
 
 // dropdown update
@@ -194,14 +252,14 @@ document.getElementById('property-dropdown').addEventListener('change', (e) => {
   if (currentLibrary !== null) generateChart(currentLibrary);
 });
 
-function getChartTitle() {
+function getCategory() {
   return (currentProperty === 'visits') ? 'VISITS'
   : (currentProperty === 'cards') ? 'CARD REGISTRATIONS'
   : 'CIRCULATED MATERIALS';
 }
 
 function generateChart() {
-  const title = getChartTitle();
+  const title = getCategory();
 
   const years = Array.from({length: 11}, (_, i) => 2013 + i);
   const data = years.map(year => {
@@ -222,8 +280,8 @@ function generateChart() {
   chartInstance = new Chart(document.getElementById('chart'), {
     type: 'bar',
     options: {
+      maintainAspectRatio: false,
       indexAxis: 'y',
-      aspectRatio: 1.5,
       scales: {
         x: {
           title: { display: true, text: `${title}`},
@@ -261,3 +319,23 @@ function getBranchFeatures() {
   const features = featureArray.join(", ");
   return (features === '') ? 'N/A' :features;
 }
+
+// legend
+function updateLegend() {
+  labels = document.querySelectorAll('.legend-label');
+  labels.forEach((label, i) => {
+    if (i === 0) {
+      label.textContent = 0;  
+    } else {
+      label.textContent = "<" + Math.round(breaks[i] / 100) * 100;
+    }
+  })
+  document.getElementById('legend-title').textContent = getCategory();
+}
+const colors = ["hsl(205 100% 0%)", "hsl(208 85.8% 75.1%)", "hsl(208 81.9% 61%)", "hsl(210 100% 42.9%)", "hsl(215 100% 32.5%)","hsl(225 100% 22.2%)"]
+circles = document.querySelectorAll('#legend circle');
+circles.forEach((circle, i) => {
+  if (colors[i]) {
+    circle.setAttribute('fill', colors[i]);
+  }
+})

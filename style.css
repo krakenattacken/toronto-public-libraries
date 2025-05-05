@@ -4,6 +4,8 @@
   --bg-white: hsl(0 0% 96.1%);
   --pale-grey: hsl(0 3.7% 84.1%);
   --dark-grey: hsl(0 0% 54.9%);
+  --purple: hsla(287 100% 16%);
+  --green: hsla(137 100% 16%);
 }
 
 html, body {
@@ -25,6 +27,10 @@ h1 {
 }
 h1:hover > span{
   color: var(--bright-blue);
+}
+
+h2 {
+  font-size: 1.4rem;
 }
 
 p {
@@ -58,7 +64,7 @@ main {
   position: absolute;
   top: 10px;
   left: 10px;
-  width: 370px;
+  width: 340px;
 }
 
 .container {
@@ -105,6 +111,10 @@ main {
 }
 
 #close-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   cursor: pointer;
   padding: 0;
   background: transparent;
@@ -120,22 +130,53 @@ main {
   background: var(--bright-blue-lite);
 }
 
-select {
-  font: inherit;
-  font-size: 14px;
-  border-radius: 5px;
-  max-width: 50%;
+.chart-container {
+  height: 220px;
 }
 
-/* #popup::-webkit-scrollbar {
-  width: 1em;
+label {
+  font-size: 0.8rem;
 }
-#popup::-webkit-scrollbar-thumb {
+#toggle-closest:checked {
+  accent-color: var(--green);
+}
+#toggle-neighbourhoods:checked {
+  accent-color: var(--purple);
+}
+select {
+  font: inherit;
+  font-size: 0.8rem;
+  border-radius: 5px;
+  border: 1px solid var(--dark-grey);
+}
+option:checked {
   background: var(--bright-blue-lite);
 }
-#popup::-webkit-scrollbar-track {
-  background: var(--pale-grey);
+
+/* tooltips */
+.maplibregl-popup {
+  border-radius: 5px;
 }
-#popup::-webkit-scrollbar-thumb:hover {
-  background: var(--bright-blue);
-} */
+
+.maplibregl-popup-content {
+  padding: 5px 10px;
+}
+
+/* legend */
+#legend {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  max-width: 120px;
+}
+#legend-title {
+  margin: 0;
+  text-align: center;
+}
+.legend-row {
+  display: inline-flex;
+  align-items: center;
+}

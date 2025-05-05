@@ -29,17 +29,21 @@
             See more on <a href="https://github.com/krakenattacken/toronto-public-libraries" target="_blank" rel="noopener noreferrer">GitHub</a>. Map by Laurence Jang.
           </p>
         </div>
-        <div class="sidebar-container menu">
-          <input id="slider" type="range" min="2013" max="2023" step="1" value="2023"/>
-          <label id="year" for="slider"></label>
-          <select id="property-dropdown">
-            <option value="visits">Visits</option>
-            <option value="circulation">Circulated Materials</option>
-            <option value="cards">Card Registrations</option>
-          </select>
-        </div>
-        <div class="sidebar-container legend">
-          <!--Some dynamic legend?-->
+        <div class="sidebar-container">
+          <div>
+            <select id="property-dropdown">
+              <option value="visits">Visits</option>
+              <option value="circulation">Circulated Materials</option>
+              <option value="cards">Card Registrations</option>
+            </select>
+            <select id="year-dropdown"></select>
+          </div>
+          <label>
+            <input type="checkbox" id="toggle-neighbourhoods"/>Neighbourhoods
+          </label>
+          <label>
+            <input type="checkbox" id="toggle-closest"/>Closest Library
+          </label>
         </div>
         <div id="popup" class="sidebar-container collapse">
           <div class="popup-title">
@@ -55,13 +59,39 @@
           <p><b>Neighbourhood: </b><span id="branch-neighbourhood"></span></p>
           <p><b>Computer workstations: </b><span id="branch-workstations"></span></p>
           <p><b>Branch programs/features: </b><span id="branch-features"></span></p>
-          <div>
+          <div class="chart-container">
             <canvas id="chart"></canvas>
           </div>
         </div>
       </div>  
-      
     </main>
+    <div id="legend" class="sidebar-container">
+      <h3 id="legend-title">test</h3>
+      <div class="legend-row">
+        <svg height="30" width="64"><circle cx="31" cy="16" r="4" /></svg>
+        <span class="legend-label"></span>
+      </div>
+      <div class="legend-row">
+        <svg height="38" width="64"><circle cx="31" cy="20" r="8" /></svg>
+        <span class="legend-label"></span>
+      </div>
+      <div class="legend-row">
+        <svg height="44" width="64"><circle cx="31" cy="23" r="12" /></svg>
+        <span class="legend-label"></span>
+      </div>
+      <div class="legend-row">
+        <svg height="50" width="64"><circle cx="31" cy="25" r="16" /></svg>
+        <span class="legend-label"></span>
+      </div>
+      <div class="legend-row">
+        <svg height="54" width="64"><circle cx="31" cy="25" r="20" /></svg>
+        <span class="legend-label"></span>
+      </div>
+      <div class="legend-row">
+        <svg height="54" width="64"><circle cx="31" cy="27" r="26" /></svg>
+        <span class="legend-label"></span>
+      </div>      
+    </div>
     <script src="map.js"></script>
   </body>
 </html>
