@@ -1,11 +1,11 @@
 :root {
   --bright-blue: hsl(210 100% 42.9%);
   --bright-blue-lite: hsla(210 100% 55.1% / 0.34);
-  --bg-white: hsl(0 0% 96.1%);
+  --bg-white: hsl(0 0% 98.1%);
   --pale-grey: hsl(0 3.7% 84.1%);
   --dark-grey: hsl(0 0% 54.9%);
-  --purple: hsla(287 100% 16%);
-  --green: hsla(137 100% 16%);
+  --purple: hsl(287, 100%, 23%);
+  --green: hsl(137 100% 16%);
 }
 
 html, body {
@@ -77,7 +77,6 @@ main {
 .sidebar-container {
   background-color: var(--bg-white);
   padding: 5px 10px;
-  border-radius: 5px;
   box-shadow: 0 0 5px var(--dark-grey);
 }
 
@@ -147,10 +146,9 @@ select {
   font: inherit;
   font-size: 0.8rem;
   border-radius: 5px;
-  border: 1px solid var(--dark-grey);
-}
-option:checked {
-  background: var(--bright-blue-lite);
+  border: 2px solid var(--bright-blue);
+  background-color: var(--bg-white);
+  color: var(--bright-blue);
 }
 
 /* tooltips */
