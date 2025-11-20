@@ -1,7 +1,9 @@
 # Toronto Public Library Map
 
 An interactive map visualizing statistics about Toronto Public Library branches bewteen 2013 and 2023. 
- 
+
+🏆2025 Canadian Cartographic Association Web Map Award Winner
+
 ## Tools
 MapLibre GL JS, Chart.js, simple-statistics, D3. Made with vanilla JS, HTML, CSS. 
 
